@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="app-token" content="__APP_TOKEN__">
+  <title>标准规范下载器 · 全部公告库</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="30" height="30"><path d="M8 3.5h10.5L25 10v18.5H8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M18 3.5V10h7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 15h9M12 19h9M12 23h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div>
+        <h1>标准规范下载器</h1>
+        <p>住建部 / 国标网 / 工标网</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span class="snapshot" id="snapshot">数据快照读取中…</span>
+      <button class="btn ghost small" id="refreshBtn" title="从住建部读取最新标准公告">
+        <svg viewBox="0 0 20 20" width="15" height="15" aria-hidden="true"><path d="M16 7a6.5 6.5 0 1 0 .4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M16.5 3.5v4h-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        更新公告库
+      </button>
+      <button class="btn ghost small" id="quitBtn" title="关闭本地服务并退出">
+        退出
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <section class="panel control-panel">
+      <div class="control-row">
+        <div class="field search-field">
+          <label for="searchInput">检索</label>
+          <div class="search-row">
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><circle cx="8.8" cy="8.8" r="5.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <input id="searchInput" type="search" autocomplete="off" placeholder="输入关键词，如：建筑防火 / 生物安全 / 绿色建筑">
+            </div>
+            <button class="btn primary search-go" id="searchGoBtn">搜索规范</button>
+          </div>
+        </div>
+        <div class="field folder-field">
+          <label for="folderInput">保存到</label>
+          <div class="folder-row">
+            <input id="folderInput" type="text" spellcheck="false" placeholder="~/Downloads/建筑电气规范">
+            <button class="btn secondary" id="chooseBtn">选择…</button>
+          </div>
+        </div>
+      </div>
+      <div class="control-actions">
+        <div class="selection-tools">
+          <button class="btn link" id="selectAllBtn">全选可下载</button>
+          <button class="btn link" id="clearBtn">清空选择</button>
+          <span class="selection-count" id="selectionCount">已选 0 项</span>
+        </div>
+        <button class="btn primary" id="downloadBtn" disabled>
+          <svg viewBox="0 0 20 20" width="17" height="17" aria-hidden="true"><path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M4 15.5h12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          下载选中文件
+        </button>
+      </div>
+    </section>
+
+    <section class="type-bar hidden" id="typeBar">
+      <div class="type-main">
+        <span class="type-label">标准类型</span>
+        <div class="type-chips" id="typeChips"></div>
+      </div>
+      <span class="sort-hint" id="sortHint">可下载优先</span>
+    </section>
+
+    <section class="panel table-panel">
+      <div class="panel-head">
+        <div>
+          <h3>标准清单 <span class="count-pill" id="resultCount">—</span></h3>
+          <p class="panel-sub" id="resultSub">输入关键词，检索住建部标准公告。</p>
+        </div>
+        <div class="legend">
+          <span><i class="dot green"></i>可下载</span>
+          <span><i class="dot amber"></i>含局部修订</span>
+          <span><i class="dot gray"></i>官方未公开</span>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="standards-table">
+          <thead>
+            <tr>
+              <th class="check-col"><input type="checkbox" id="checkAll" aria-label="全选当前可下载项"></th>
+              <th class="num-col">标准号</th>
+              <th>标准名称</th>
+              <th class="date-col">实施日期</th>
+              <th class="status-col">状态</th>
+              <th class="file-col">文件</th>
+              <th class="action-col">操作</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">⌕</div>
+          <h4>检索全部标准公告</h4>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>数据来源：<a href="https://www.mohurd.gov.cn/gongkai/fdzdgknr/bzgg/index.html" target="_blank" rel="noreferrer">住建部标准公告</a> · <a href="https://std.samr.gov.cn/" target="_blank" rel="noreferrer">全国标准信息公共服务平台</a> · <a href="https://www.ccsn.org.cn/" target="_blank" rel="noreferrer">国家工程建设标准化信息网</a>。PDF 版权归出版单位所有，仅供个人学习与项目内部查阅。</p>
+      <p class="footer-meta" id="footerMeta">标准规范下载器</p>
+    </footer>
+  </main>
+
+  <aside class="job-panel hidden" id="jobPanel" aria-live="polite">
+    <div class="job-head">
+      <div>
+        <strong id="jobTitle">正在检索</strong>
+        <span id="jobStatus">准备中…</span>
+      </div>
+      <button class="icon-btn" id="jobClose" aria-label="收起">×</button>
+    </div>
+    <div class="progress-track"><div class="progress-bar" id="jobProgress"></div></div>
+    <div class="job-meta" id="jobMeta"></div>
+    <div class="job-items" id="jobItems"></div>
+    <div class="job-actions">
+      <button class="btn secondary small" id="revealBtn" disabled>在 Finder 中打开</button>
+      <button class="btn link small hidden" id="jobCancel">取消</button>
+    </div>
+  </aside>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

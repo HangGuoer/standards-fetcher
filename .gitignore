@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Build outputs
+dist/
+build/标准规范下载器/
+build/pyinstaller-cache/
+build/icon.iconset/
+标准规范下载器.spec
+
+# Packaged artifacts (published separately via Releases)
+标准规范下载器.app/
+标准规范下载器-*.zip
+
+# Local runtime / test data
+_runtime_test/
+_testdata/
+_smoke/
+*.log
+
+# GitHub CLI local auth (never commit)
+.gh-config/

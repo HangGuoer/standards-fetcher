@@ -1,0 +1,38 @@
+{
+  "snapshot": "2026-10-17",
+  "source_name": "住房和城乡建设部标准公告",
+  "source_url": "https://www.mohurd.gov.cn/gongkai/fdzdgknr/bzgg/index.html",
+  "categories": [
+    {
+      "id": "all",
+      "name": "全部",
+      "count": 59
+    },
+    {
+      "id": "core",
+      "name": "核心设计",
+      "count": 20
+    },
+    {
+      "id": "fire",
+      "name": "防火与通用",
+      "count": 7
+    },
+    {
+      "id": "energy",
+      "name": "新能源与充电",
+      "count": 4
+    },
+    {
+      "id": "special",
+      "name": "专项建筑",
+      "count": 14
+    },
+    {
+      "id": "install",
+      "name": "施工验收",
+      "count": 14
+    }
+  ],
+  "description": "在住房和城乡建设部标准公告中按任意关键词检索，自动合并同名旧版，下载官方公开的 PDF 原件。"
+}
